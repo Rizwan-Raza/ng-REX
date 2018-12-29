@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'rex-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "rex-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  title = 'ng-rex';
+  isInverted: boolean = false;
+
+  title = "R.E.X.";
+
+  onInvert(invert: boolean) {
+    this.isInverted = invert;
+  }
 }

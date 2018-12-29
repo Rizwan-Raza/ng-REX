@@ -1,0 +1,17 @@
+div {
+  text-align: center;
+
+  button {
+    margin: 8px;
+
+    &.facebook {
+      background-color: #43609c;
+      color: #ffffff;
+    }
+
+    &.google {
+      background-color: red;
+      color: #ffffff;
+    }
+  }
+}

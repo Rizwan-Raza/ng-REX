@@ -1,0 +1,64 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <mat-accordion *ngIf="isLogin; else showHome">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Home
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <a mat-list-item routerLink="buy">Buy Property</a>
+          <a mat-list-item routerLink="sell">Sell Property</a>
+          <a mat-list-item routerLink="my">My Properties</a>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+      <ng-template #showHome>
+        <a mat-list-item routerLink="">Home</a>
+      </ng-template>
+
+      <a mat-list-item routerLink="about">About</a>
+      <a mat-list-item routerLink="gallery">Gallery</a>
+      <a mat-list-item routerLink="contact">Contact</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>{{title}}</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="invertColors(invertIcon)">
+        <mat-icon aria-label="Invert Colors" matTooltip="Invert Colors" #invertIcon>invert_colors</mat-icon>
+      </button>
+      <div *ngIf="isLogin; else showLogin">
+        <button mat-icon-button [matMenuTriggerFor]="menu"><img src="{{userData.photoURL}}" /></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="showData()">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item disabled>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Sign out</span>
+          </button>
+        </mat-menu>
+      </div>
+      <ng-template #showLogin>
+        <button mat-button aria-label="Sign in with ..." matTooltip="Sign in with ..." (click)="openDialog()">
+          <mat-icon>account_circle</mat-icon> Sign In
+        </button>
+      </ng-template>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
