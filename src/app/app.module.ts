@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import {
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatExpansionModule,
   MatGridListModule,
@@ -17,8 +18,10 @@ import {
   MatMenuModule,
   MatProgressBarModule,
   MatRadioModule,
+  MatRippleModule,
   MatSelectModule,
   MatSidenavModule,
+  MatSlideToggleModule,
   MatStepperModule,
   MatToolbarModule
 } from "@angular/material";
@@ -75,6 +78,9 @@ import { SigninDialogComponent } from "./signin-dialog/signin-dialog.component";
     MatExpansionModule,
     MatStepperModule,
     MatProgressBarModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
+    MatRippleModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,

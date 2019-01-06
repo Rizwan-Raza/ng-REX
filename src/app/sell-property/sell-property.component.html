@@ -1,24 +1,218 @@
-<mat-vertical-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Fill out property name</ng-template>
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Property Name" formControlName="prop_name" required>
+<mat-vertical-stepper [linear]="false" #stepper>
+  <mat-step [stepControl]="basicInfoGroup">
+    <form [formGroup]="basicInfoGroup">
+      <ng-template matStepLabel>Basic Information</ng-template>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Property Type</mat-label>
+        <mat-select placeholder="ex: 'Residential'" formControlName="prop_type" required>
+          <mat-option *ngFor="let type of prop_types" [value]="type.value">
+            {{ type.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Transaction Type</mat-label>
+        <mat-select placeholder="ex: 'New'" formControlName="tran_type" required #tranType>
+          <mat-option *ngFor="let type of tran_types" [value]="type.value">
+            {{ type.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Property Title</mat-label>
+        <input matInput placeholder="ex: 'Ashiyaana Apartment'" formControlName="title" required minlength="3"
+          maxlength="30" />
+        <mat-error *ngIf="basicInfoGroup.controls.title.errors">{{
+          basicInfoGroup.controls.title.errors.required
+          ? "Please enter a property title"
+          : basicInfoGroup.controls.title.errors.minlength
+          ? "Please lengthen the title
+          to " +
+          basicInfoGroup.controls.title.errors.minlength.requiredLength +
+          " letters"
+          : basicInfoGroup.controls.title.errors.maxlength
+          ? "Please lengthen the title
+          to " +
+          basicInfoGroup.controls.title.errors.maxlength.requiredLength +
+          " letters"
+          : "Something went wrong, please
+          re-enter"
+          }}</mat-error>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup" (submit)="onSubmit()">
-      <ng-template matStepLabel>Fill out property address</ng-template>
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Property Address" formControlName="prop_address" required>
+  <mat-step [stepControl]="locationGroup">
+    <form [formGroup]="locationGroup">
+      <ng-template matStepLabel>Location</ng-template>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Street Number</mat-label>
+        <input matInput placeholder="ex: 'R-36, Sir Syed Road'" formControlName="street" required />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Town</mat-label>
+        <input matInput placeholder="ex: 'Batla House'" formControlName="town" required />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="ex: 'New Delhi'" formControlName="city" required />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>State</mat-label>
+        <input matInput placeholder="ex: 'Delhi'" formControlName="state" required />
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext type="submit">Next</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="featuresGroup">
+    <form [formGroup]="featuresGroup">
+      <ng-template matStepLabel>Features</ng-template>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Bedrooms / BHK</mat-label>
+        <input matInput placeholder="ex: '4'" formControlName="bhk" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Bathrooms</mat-label>
+        <input matInput placeholder="ex: '3'" formControlName="bathrooms" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" *ngIf="tranType.value != 'unc-2'" appearance="outline">
+        <mat-label>Age of Construction (years)</mat-label>
+        <input matInput placeholder="ex: '3'" formControlName="age" required type="number" />
+      </mat-form-field>
+
+      <mat-slide-toggle formControlName="furnished">Furnished</mat-slide-toggle>
+      <br />
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="priceAndAreaGroup">
+    <form [formGroup]="priceAndAreaGroup">
+      <ng-template matStepLabel>Price and Area</ng-template>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Covered Area (sq-ft)</mat-label>
+        <input matInput placeholder="ex: '1000'" formControlName="c_area" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Land Area (sq-ft)</mat-label>
+        <input matInput placeholder="ex: '1200'" formControlName="l_area" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Total Price (&#x20B9;)</mat-label>
+        <input matInput placeholder="ex: '12000000'" formControlName="price" required type="number" />
+      </mat-form-field>
+
+      <mat-slide-toggle formControlName="dPrice">Display Price</mat-slide-toggle>
+      <br />
+      <br />
+      <mat-slide-toggle formControlName="available">Available</mat-slide-toggle>
+      <br />
+      <br />
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="amenitiesGroup">
+    <form [formGroup]="amenitiesGroup">
+      <ng-template matStepLabel>Amenities</ng-template>
+      <mat-label>In House</mat-label>
+      <mat-selection-list formControlName="inHouse">
+        <mat-list-option *ngFor="let amenity of amenities" [value]="amenity.value">
+          {{ amenity.viewValue }}
+        </mat-list-option>
+      </mat-selection-list>
+      <br />
+      <br />
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="keyDistancesGroup">
+    <form [formGroup]="keyDistancesGroup">
+      <ng-template matStepLabel>Key Distances</ng-template>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Hospital (km)</mat-label>
+        <input matInput placeholder="ex: '2'" formControlName="hospital" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>School (km)</mat-label>
+        <input matInput placeholder="ex: '1'" formControlName="school" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Railway (km)</mat-label>
+        <input matInput placeholder="ex: '3'" formControlName="railway" required type="number" />
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="snapshotGroup">
+    <form [formGroup]="snapshotGroup">
+      <ng-template matStepLabel>Snapshot</ng-template>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Available Units</mat-label>
+        <input matInput placeholder="ex: '2'" formControlName="units" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Floor Number</mat-label>
+        <input matInput placeholder="ex: '1'" formControlName="floor" type="number" />
+        <mat-hint>0 for Ground Floor</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Total Floors</mat-label>
+        <input matInput placeholder="ex: '5'" formControlName="tFloors" required type="number" />
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Brief Description</mat-label>
+        <textarea matInput placeholder="ex: 'North Facing Apartment at the Edge of Known Road Allama Shibli Nomani Road'"
+          formControlName="desc"></textarea>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Terms and Conditions</mat-label>
+        <textarea matInput placeholder="ex: 'Only for Residency, for Families'" formControlName="tnc"></textarea>
+      </mat-form-field>
+
+      <mat-label>Property Images</mat-label>
+      <br /><br />
+      <mat-grid-list cols="5" rowHeight="1:1">
+        <mat-grid-tile *ngFor="let image of images; let i=index">
+          <mat-card>
+            <img mat-card-image [src]="image.src" />
+            <mat-card-actions align="end"><button mat-fab color="warn" (click)="removeImage(i)">
+                <mat-icon>remove</mat-icon>
+              </button></mat-card-actions>
+          </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <!-- <mat-card matRipple><mat-icon mat-card-image>add</mat-icon></mat-card> -->
+          <button mat-fab (click)="chooser.click()">
+            <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <input formControlName="images" required type="file" multiple accept="image/*" #chooser (change)="appendImage($event.target.files)" />
+      <mat-hint>Atleast one image</mat-hint>
+
+      <br /><br />
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext color="primary">Next</button>
       </div>
     </form>
   </mat-step>
@@ -28,6 +222,10 @@
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-raised-button (click)="onSubmit()" color="primary" [attr.disabled]="processing">
+        <span *ngIf="processing; else default">Selling ... Please wait ...</span>
+        <ng-template #default>Sell Property</ng-template>
+      </button>
     </div>
   </mat-step>
 </mat-vertical-stepper>

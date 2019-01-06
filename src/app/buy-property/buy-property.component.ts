@@ -12,6 +12,7 @@ import { PropertyService } from "../property.service";
 })
 export class BuyPropertyComponent implements OnInit {
   processing: boolean = true;
+  // props: Property[];
   props: Observable<Property[]> = this.property.getAllProp();
   /** Based on the screen size, switch from standard to one column per row */
   cols = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -29,6 +30,10 @@ export class BuyPropertyComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.property.getAllProp(props => {
+    //   this.props = props;
+    //   this.processing = false;
+    // });
     this.props.subscribe(() => (this.processing = false));
   }
 }

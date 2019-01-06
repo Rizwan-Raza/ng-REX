@@ -6,8 +6,9 @@
     <mat-grid-tile *ngFor="let prop of props | async" [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card">
         <mat-card-header>
+          <img mat-card-avatar [src]="prop.seller.photoURL">
           <mat-card-title>
-            {{prop.propName}}
+            {{prop.title}}
             <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
               <mat-icon>more_vert</mat-icon>
             </button>
@@ -16,9 +17,11 @@
               <button mat-menu-item>Remove</button>
             </mat-menu>
           </mat-card-title>
+          <mat-card-subtitle>by {{prop.seller.displayName}} &bull; {{prop.created | date}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div>{{prop.propAddress}}</div>
+          <img mat-card-image *ngFor="let image of prop.images" [src]="this.property.getURL(image) | async">
+          <div>{{prop.desc}}</div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

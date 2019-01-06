@@ -17,7 +17,7 @@ export class SigninDialogComponent implements OnInit {
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   socialSignIn(selector: number): void {
@@ -29,6 +29,7 @@ export class SigninDialogComponent implements OnInit {
     localStorage.setItem(
       "user",
       JSON.stringify({
+        uid: data.user.uid,
         displayName: data.user.displayName,
         email: data.user.email,
         phoneNumber: data.user.phoneNumber,
@@ -36,6 +37,6 @@ export class SigninDialogComponent implements OnInit {
       })
     );
     console.log(data.user);
-    this.dialogRef.close({ data: false });
+    this.dialogRef.close(true);
   };
 }

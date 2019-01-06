@@ -10,16 +10,16 @@ import { Observable } from "rxjs";
 @Injectable({
   providedIn: "root"
 })
-export class IsLoginGuard implements CanActivate {
+export class IsntLoginGuard implements CanActivate {
   constructor(private router: Router) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (eval(localStorage.getItem("isLogin"))) {
-      return true;
+      this.router.navigate(["/buy"]);
+      return false;
     }
-    this.router.navigate(["/home"]);
-    return false;
+    return true;
   }
 }

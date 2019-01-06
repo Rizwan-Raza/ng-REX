@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { MatDialog } from "@angular/material";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { SigninDialogComponent } from "../signin-dialog/signin-dialog.component";
@@ -25,7 +26,8 @@ export class NavComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
-    private user: UserService
+    private user: UserService,
+    private router: Router
   ) {
     this.isLogin = eval(localStorage.getItem("isLogin"));
     this.userData = JSON.parse(localStorage.getItem("user"));
@@ -47,12 +49,17 @@ export class NavComponent {
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.isLogin = result.data;
+      if (result) {
+        this.router.navigate(["/buy"]);
+      }
+      this.userData = JSON.parse(localStorage.getItem("user"));
+      this.isLogin = result;
     });
   }
 
   logout() {
     this.user.logout();
     this.isLogin = false;
+    this.router.navigate(["/home"]);
   }
 }
