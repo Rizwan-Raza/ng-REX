@@ -56,6 +56,7 @@ export class PropertyService {
     // console.log(path);
     this.storage
       .ref(path)
-      .getDownloadURL();
+      .getDownloadURL()
+      .subscribe(console.log);
   }
 }

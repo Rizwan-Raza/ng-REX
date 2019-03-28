@@ -4,19 +4,22 @@ div {
   button {
     margin: 8px;
 
+    img {
+      width: 24px;
+      height: 24px;
+      filter: invert(1);
+    }
+
     &.facebook {
-      background-color: #43609c;
-      color: #ffffff;
+      background-color: #3B5998;
     }
 
     &.google {
-      background-color: red;
-      color: #ffffff;
+      background-color: #DC4E41;
     }
 
     &.twitter {
-      background-color: #88aaff;
-      color: #ffffff;
+      background-color: #1DA1F2;
     }
   }
 }

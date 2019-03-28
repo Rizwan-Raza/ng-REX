@@ -20,7 +20,7 @@
           <mat-card-subtitle>by {{prop.seller.displayName}} &bull; {{prop.created | date}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <img mat-card-image *ngFor="let image of prop.images" [src]="this.property.getURL(image) | async">
+          <img mat-card-image *ngFor="let image of prop.images" [src]="this.property.getURL(image)">
           <div>{{prop.desc}}</div>
         </mat-card-content>
       </mat-card>
