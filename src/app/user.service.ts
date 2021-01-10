@@ -6,25 +6,25 @@ import { auth } from "firebase/app";
   providedIn: "root"
 })
 export class UserService {
-  constructor(private afAuth: AngularFireAuth) {}
+  constructor(private afAuth: AngularFireAuth) { }
 
   socialSignIn(socialSelector: number) {
     switch (socialSelector) {
       case 1:
       default:
-        return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+        return this.afAuth.signInWithPopup(new auth.GoogleAuthProvider());
       case 2:
-        return this.afAuth.auth.signInWithPopup(
+        return this.afAuth.signInWithPopup(
           new auth.FacebookAuthProvider()
         );
       case 3:
-        return this.afAuth.auth.signInWithPopup(new auth.TwitterAuthProvider());
+        return this.afAuth.signInWithPopup(new auth.TwitterAuthProvider());
     }
   }
 
   logout() {
     localStorage.setItem("isLogin", "false");
     localStorage.removeItem("user");
-    return this.afAuth.auth.signOut();
+    return this.afAuth.signOut();
   }
 }
